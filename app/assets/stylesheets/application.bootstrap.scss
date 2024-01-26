@@ -1,0 +1,16 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+
+img {
+    max-width: 100%; /* Ensures the image doesn't exceed its container width */
+    max-height: 300px; /* Set a maximum height as needed */
+    height: auto; /* Ensures the aspect ratio is maintained */
+    
+  }
+
+  .card-text {
+    max-height: 100px; /* Set the maximum height for the text */
+    overflow: hidden; /* Hide the overflowed content */
+    text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
+  }

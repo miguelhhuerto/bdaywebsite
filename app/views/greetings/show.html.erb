@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpongeBob Greetings</title>
+  <!-- Add the SpongeBob SquarePants font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SpongeBob+SquarePants&display=swap">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif; /* Fallback font */
+    }
+
+    .spongebob-link,
+    .spongebob-list-item {
+      font-family: 'SpongeBob SquarePants', sans-serif;
+    }
+
+    .spongebob-link {
+      text-decoration: none;
+      color: #FFD700; /* SpongeBob yellow color */
+      font-size: 20px;
+    }
+
+    .spongebob-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .spongebob-list-item {
+      color: #FFD700; /* SpongeBob yellow color */
+      font-size: 18px;
+      margin-bottom: 10px;
+      /* Add more styling as needed */
+    }
+  </style>
+</head>
+
+<body>
+
+  <%= link_to 'Index', greetings_path, class: 'spongebob-link' %>
+
+  <ul class="spongebob-list">
+    <li class="spongebob-list-item"><%= @greeting.message %></li>
+    <li class="spongebob-list-item"><%= @greeting.author %></li>
+  </ul>
+
+</body>
+</html>

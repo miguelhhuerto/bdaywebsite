@@ -1,0 +1,21 @@
+<h1>Edit Greeting</h1>
+
+<%= link_to 'Index', greetings_path %>
+<% if @greeting.errors.any? %>
+  <ul>
+    <% @greeting.errors.each do |error| %>
+      <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= form_with model: @greeting do |form| %>
+  <div>
+    <%= form.label :message %>
+    <%= form.text_field :message %>
+  </div>
+  <div>
+    <%= form.label :author %>
+    <%= form.text_field :author %>
+  </div>
+  <%= form.submit %>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Submit a Picture for Anya!</h1>
+
+<%= link_to 'Index', pictures_path %>
+<% if @picture.errors.any? %>
+  <ul>
+    <% @picture.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @picture do |form| %>
+   <div>
+     <%= form.file_field :image %>
+   </div>
+
+  <div>
+  <%= form.label :caption %>
+  <%= form.text_field :caption %>
+</div>
+
+<div>
+<%= form.label :author %>
+<%= form.text_field :author %>
+</div>
+  <%= form.submit %>
+<% end %>
+
+

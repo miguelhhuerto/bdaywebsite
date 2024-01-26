@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <%= link_to 'Back', pictures_path, class: 'btn btn-secondary' %>
+
+  <div class="card mt-4">
+    <div class="card-body text-center">
+      <%= image_tag @picture.image_url, alt: "Anya picture", class: 'img-fluid rounded' %>
+      <ul class="list-unstyled mt-3">
+      <li><strong>Caption:</strong> <%= @picture.caption %></li>
+        <li><strong>From:</strong> <%= @picture.author %></li>
+        
+      </ul>
+    </div>
+  </div>
+</div>

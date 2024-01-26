@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>"Anya's Birthday!"</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    #carouselExampleSlidesOnly {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+    
+
+    #carouselExampleSlidesOnly .carousel-inner {
+      height: 100%;
+    }
+
+    #carouselExampleSlidesOnly .carousel-item {
+      height: 100%;
+      display: none;
+      position: relative;
+    }
+
+    
+
+    #carouselExampleSlidesOnly .carousel-item.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+#carouselExampleSlidesOnly .carousel-item img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+  border-radius: 1000px; /* Adjust the border-radius value as needed */
+}
+
+body {
+  font-family: 'Bungee', sans-serif;
+  background-image: url('<%= asset_path('anya/sea.png') %>');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #FEE12B;
+  
+}
+
+    .card-title {
+      color: #FF4500;
+    }
+
+    .card-text {
+      color: #FF69B4;
+    }
+
+    h1 {
+      color: #FF4500; /* SpongeBob Orange */
+    }
+
+    .nav-link {
+      color: #3D9970 !important; /* SpongeBob Teal */
+    }
+
+    .card {
+      border: 2px solid #FF69B4; /* SpongeBob Pink */
+      background-color: #ADDFFF !important;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .card-footer{
+      color: #3D9970;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <ul class="nav nav-underline ml-auto">
+      <li class="nav-item">
+        <a href="<%= home_index_path %>" class="nav-link active" aria-current="page">Home</a>
+      </li>
+      <li class="nav-item">
+        <a href="<%= greetings_path %>" class="nav-link">Greetings</a>
+      </li>
+      <li class="nav-item">
+        <a href="<%= pictures_path %>" class="nav-link">Pictures</a>
+      </li>
+    </ul>
+  </div>
+
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= image_tag 'anya/giphy.gif', alt: 'Image 1' %>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Add Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Add confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- Add the MLG air horn sound (adjust the src attribute accordingly) -->
+  <audio id="mlgSound" src="<%= asset_path('anya/mlg-airhorn.mp3') %>" type="audio/mp3"></audio>
+
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var carouselImage = document.querySelector('#carouselExampleSlidesOnly .carousel-item.active img');
+    var mlgSound = document.getElementById('mlgSound');
+  
+    carouselImage.addEventListener('click', function (event) {
+      event.preventDefault();
+      mlgSound.play();
+  
+      // Add confetti when the image is clicked
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+  
+      // Add any other functionality you want when the image is clicked
+    });
+  });
+  </script>
+  
+
+  <h1>Birthday Greetings!</h1>
+
+  <div id="greetingsCarousel" class="carousel slide" data-bs-ride="carousel">
+    <button class="carousel-control-prev" type="button" data-bs-target="#greetingsCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#greetingsCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+    <div class="carousel-inner">
+      <% if @greetings.present? %>
+        <% @greetings.each_slice(3).with_index do |slice, index| %>
+          <div class="carousel-item <%= 'active' if index.zero? %>">
+            <div class="row">
+              <% slice.each do |greeting| %>
+                <div class="col-md-4">
+                  <div class="card mb-4">
+                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#greetingModal<%= greeting.id %>">
+                      <div class="card-body">
+                        <h5 class="card-title"><%= greeting.author %>'s greeting </h5>
+                        <p class="card-text overflow-hidden" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          <%= greeting.message %>
+                        </p>
+                      </div>
+                    </a>
+                    <div class="card-footer">
+                      <small class="text-muted">Last updated <%= time_ago_in_words(greeting.created_at) %> ago</small>
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="greetingModal<%= greeting.id %>" tabindex="-1" aria-labelledby="greetingModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="greetingModalLabel">Greeting from <%= greeting.author %></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <%= greeting.message %>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <a href="<%= greetings_path %>" class="card h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                  <h5 class="card-title">View More Greetings</h5>
+                  <p class="card-text">Click here to view all greetings</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <h1>Anya Memories</h1>
+
+  <div id="picturesCarousel" class="carousel slide" data-bs-ride="carousel">
+    <button class="carousel-control-prev" type="button" data-bs-target="#picturesCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#picturesCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+    <div class="carousel-inner">
+      <% if @pictures.present? %>
+        <% @pictures.each_slice(3).with_index do |slice, index| %>
+          <div class="carousel-item <%= 'active' if index.zero? %>">
+            <div class="row">
+              <% slice.each do |picture| %>
+                <div class="col-md-4">
+                  <div class="card mb-4">
+                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#pictureModal<%= picture.id %>">
+                      <div class="card-body">
+                        <%= image_tag picture.image.url, class: 'd-block w-100', alt: '...', style: 'object-fit: cover;' %>
+                      </div>
+                    </a>
+                    <div class="card-footer">
+                      <small class="text-muted">Last updated <%= time_ago_in_words(picture.created_at) %> ago</small>
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="pictureModal<%= picture.id %>" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="pictureModalLabel">Picture by <%= picture.author %></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <%= image_tag picture.image.url, class: 'd-block w-100', alt: '...'%>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <a href="<%= pictures_path %>" class="card h-100 text-decoration-none text-dark">
+                <div class="card-body">
+                  <h5 class="card-title">View More Pictures</h5>
+                  <p class="card-text">Click here to view all pictures</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</body>
+
+</html>
